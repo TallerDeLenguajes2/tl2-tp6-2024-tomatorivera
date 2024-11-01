@@ -1,0 +1,28 @@
+@model Models.Producto
+@{
+    ViewData["Title"] = "Alta producto";
+}
+
+<section class="container">
+    <h2 class="border-bottom my-3">Alta de productos</h2>
+    <form asp-controller="Producto" asp-action="AltaProducto" method="post">
+        <section class="form-group">
+            <label for="descripcion">Descripción</label>
+            <div class="input-group">
+                <span class="input-group-text" id="descripcion-addon">#</span>
+                <input asp-for="Descripcion" class="form-control" aria-describedby="descripcion-addon">
+            </div>
+        </section>
+        <section class="form-group">
+            <label for="precio">Precio</label>
+            <div class="input-group">
+                <span class="input-group-text" id="precio-addon">$</span>
+                <input asp-for="Precio" class="form-control" aria-describedby="precio-addon">
+            </div>
+        </section>
+        <section class="d-flex justify-content-center align-items-center gap-2 my-3">
+            <input type="submit" value="Dar de alta" class="btn btn-primary">
+            <input type="reset" value="Borrar formulario" class="btn btn-outline-secondary">
+        </section>
+    </form>
+</section>

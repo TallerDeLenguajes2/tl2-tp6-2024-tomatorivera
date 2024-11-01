@@ -20,6 +20,7 @@ public class ProductoController : Controller
         return View();
     }
 
+    [HttpGet]
     public IActionResult Listar()
     {
         List<Producto> productos;
@@ -35,5 +36,10 @@ public class ProductoController : Controller
         }
 
         return View("Listar", productos);
+    }
+
+    public IActionResult Alta()
+    {
+        return View();
     }
 }
