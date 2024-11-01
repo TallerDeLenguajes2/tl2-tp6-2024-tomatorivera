@@ -42,4 +42,11 @@ public class ProductoController : Controller
     {
         return View();
     }
+
+    [HttpPost("api/AltaProducto")]
+    public IActionResult AltaProducto(Producto producto)
+    {
+        repositorioProductos.Insertar(producto);
+        return RedirectToAction("Listar");
+    }
 }

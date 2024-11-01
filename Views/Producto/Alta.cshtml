@@ -4,20 +4,20 @@
 }
 
 <section class="container">
-    <h2 class="border-bottom my-3">Alta de productos</h2>
-    <form asp-controller="Producto" asp-action="AltaProducto" method="post">
-        <section class="form-group">
+    <h2 class="border-bottom my-3 w-50 mx-auto">Alta de productos</h2>
+    <form asp-controller="Producto" asp-action="AltaProducto" method="post" class="w-50 mx-auto">
+        <section class="form-group mb-3">
             <label for="descripcion">Descripción</label>
             <div class="input-group">
                 <span class="input-group-text" id="descripcion-addon">#</span>
-                <input asp-for="Descripcion" class="form-control" aria-describedby="descripcion-addon">
+                <input asp-for="Descripcion" class="form-control" aria-describedby="descripcion-addon" required>
             </div>
         </section>
         <section class="form-group">
             <label for="precio">Precio</label>
             <div class="input-group">
                 <span class="input-group-text" id="precio-addon">$</span>
-                <input asp-for="Precio" class="form-control" aria-describedby="precio-addon">
+                <input asp-for="Precio" class="form-control" aria-describedby="precio-addon" required>
             </div>
         </section>
         <section class="d-flex justify-content-center align-items-center gap-2 my-3">
