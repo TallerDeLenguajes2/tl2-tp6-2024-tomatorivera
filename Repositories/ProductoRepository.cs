@@ -3,7 +3,7 @@ using Models;
 
 namespace Persistence;
 
-public class ProductoRepository : IRepository<Producto>
+public class ProductoRepositoryImpl : IRepository<Producto>
 {
     private readonly string connectionString = "Data Source=Db/Tienda.db;Cache=Shared";
 
