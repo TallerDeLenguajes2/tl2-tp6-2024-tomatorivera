@@ -23,19 +23,7 @@ public class ProductoController : Controller
     [HttpGet]
     public IActionResult Listar()
     {
-        List<Producto> productos;
-
-        try
-        {
-            productos = repositorioProductos.Listar();
-        }
-        catch (Exception ex)
-        {
-            System.Console.WriteLine($"ERROR: {ex.Message}");
-            productos = new List<Producto>();
-        }
-
-        return View("Listar", productos);
+        return View("Listar", repositorioProductos.Listar());
     }
 
     public IActionResult Alta()
@@ -48,5 +36,11 @@ public class ProductoController : Controller
     {
         repositorioProductos.Insertar(producto);
         return RedirectToAction("Listar");
+    }
+
+    [HttpGet]
+    public IActionResult Modificar(int id)
+    {
+        return View(repositorioProductos.Obtener(id));
     }
 }
