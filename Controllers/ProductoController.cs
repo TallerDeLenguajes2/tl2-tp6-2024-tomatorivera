@@ -43,4 +43,11 @@ public class ProductoController : Controller
     {
         return View(repositorioProductos.Obtener(id));
     }
+
+    [HttpPost("api/ModificarProducto")]
+    public IActionResult ModificarProducto(Producto producto)
+    {
+        repositorioProductos.Modificar(producto.IdProducto, producto);
+        return RedirectToAction("Listar");
+    }
 }
