@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Eliminar producto";
+}
+@model Models.Producto
+
+<section class="container">
+    <p class="text-center">¿Está seguro de que desea eliminar el producto '<strong>@Model.Descripcion</strong>'?</p>
+    <div class="d-flex justify-content-center align-items-center gap-2">
+        <a asp-controller="Producto" asp-action="EliminarProducto" asp-route-id="@Model.IdProducto" class="btn btn-danger">Confirmar</a>
+        <a asp-controller="Producto" asp-action="Listar" class="btn btn-outline-danger">Cancelar</a>
+    </div>
+</section>

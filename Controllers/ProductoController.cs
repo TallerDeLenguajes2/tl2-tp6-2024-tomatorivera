@@ -50,4 +50,16 @@ public class ProductoController : Controller
         repositorioProductos.Modificar(producto.IdProducto, producto);
         return RedirectToAction("Listar");
     }
+
+    [HttpGet]
+    public IActionResult Eliminar(int id) {
+        return View(repositorioProductos.Obtener(id));
+    }
+
+    [HttpGet("api/EliminarProducto/{id}")]
+    public IActionResult EliminarProducto(int id)
+    {
+        repositorioProductos.Eliminar(id);
+        return RedirectToAction("Listar");
+    }
 }
