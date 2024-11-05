@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Modificando presupuesto";
+}
+@model Models.Presupuesto
+
+<h2 class="border-bottom mb-3">Modificar un presupuesto</h2>
+<form asp-controller="Presupuesto" asp-action="ModificarPresupuesto" method="post" class="w-75 mx-auto my-3 p-4">
+    <input type="hidden" asp-for="@Model.Id">
+    <section class="form-group">
+        <label asp-for="NombreDestinatario">Nombre del destinatario</label>
+        <input asp-for="NombreDestinatario" class="form-control" value="@Model.NombreDestinatario" maxlength="30" required>
+        <span asp-validation-for="NombreDestinatario" class="text-danger"></span>
+    </section>
+    <section class="form-group mb-3">
+        <label asp-for="FechaCreacion">Fecha de creacion (yyyy-MM-dd):</label>
+        <input asp-for="FechaCreacion" class="form-control" required>
+        <span asp-validation-for="FechaCreacion" value="FechaCreacion" class="text-danger"></span>
+    </section>
+    <section class="d-flex justify-content-center align-items-center my-2 gap-3">
+        <input type="submit" value="Modificar presupuesto" class="btn btn-primary">
+        <input type="reset" value="Valores iniciales" class="btn btn-outline-primary">
+    </section>
+</form>

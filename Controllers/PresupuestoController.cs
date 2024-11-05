@@ -55,4 +55,15 @@ public class PresupuestoController : Controller
         repositorioPresupuestos.Insertar(presupuesto);
         return RedirectToAction("Listar");
     }
+
+    [HttpGet]
+    public IActionResult ModificarPresupuesto(int id) {
+        return View(repositorioPresupuestos.Obtener(id));
+    }
+
+    [HttpPost]
+    public IActionResult ModificarPresupuesto(Presupuesto presupuesto) {
+        repositorioPresupuestos.Modificar(presupuesto.Id, presupuesto);
+        return RedirectToAction("Listar");
+    }
 }

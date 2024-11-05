@@ -15,6 +15,7 @@
             <th>Nombre destinatario</th>
             <th>Fecha de creación</th>
             <th>Detalle</th>
+            <th>Acciones</th>
         </thead>
         <tbody class="text-center">
             @foreach (Presupuesto presupuesto in Model) {
@@ -23,7 +24,11 @@
                     <td>@presupuesto.FechaCreacion</td>
                     <td>
                         <a asp-controller="Presupuesto" asp-action="VerDetalle" asp-route-id="@presupuesto.Id" class="btn btn-primary">Ver detalle</a>
-                        <a asp-controller="Presupuesto" asp-action="AgregarProductoDetalle" asp-route-id="@presupuesto.Id" class="btn btn-outline-primary">Agregar productos</a>
+                        <a asp-controller="Presupuesto" asp-action="AgregarProductoDetalle" asp-route-id="@presupuesto.Id" class="btn btn-info">Agregar productos</a>
+                    </td>
+                    <td>
+                        <a asp-controller="Presupuesto" asp-action="ModificarPresupuesto" asp-route-id="@presupuesto.Id" class="btn btn-warning">Modificar</a>
+                        <a asp-controller="Presupuesto" asp-action="EliminarPresupuesto" asp-route-id="@presupuesto.Id" class="btn btn-danger">Eliminar</a>
                     </td>
                 </tr>
             }
