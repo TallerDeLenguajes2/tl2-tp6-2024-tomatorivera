@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Detalle del presupuesto";
+}
+@using Models
+@model Presupuesto
+
+<h3>Detalle</h3>
+<section class="my-3 border-bottom border-top">
+    <ul class="my-4 ps-5">
+        <li><strong>Detalle del presupuesto ID @Model.Id</strong></li>
+        <ul>
+            <li>Destinatario: <strong>@Model.NombreDestinatario</strong></li>
+            <li>Fecha de creación: <strong>@Model.FechaCreacion</strong></li>
+            <li>Total de productos: <strong>@Model.CantidadProductos()</strong></li>
+        </ul>
+    </ul>
+</section>
+<section class="mb-3 row">
+    <div class="col-6 text-start d-flex align-items-center gap-2">
+        <span>IVA: </span>
+        <span><strong>@(Presupuesto.IVA * 100) %</strong></span>
+    </div>
+    <div class="col-6 text-end">
+        <a asp-controller="Presupuesto" asp-action="AgregarProductoDetalle" asp-route-id="@Model.Id" class="btn btn-success">+ Agregar producto</a>
+    </div>
+</section>
+<article class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark text-center">
+            <th>Descripción del producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total del producto</th>
+        </thead>
+        <tbody class="text-center">
+            @foreach (PresupuestoDetalle detalle in Model.Detalle) {
+                var precioProducto = detalle.Producto.Precio * detalle.Cantidad;
+
+                <tr>
+                    <td>@detalle.Producto.Descripcion</td>
+                    <td>@detalle.Producto.Precio</td>
+                    <td>@detalle.Cantidad</td>
+                    <td>@precioProducto.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th scope="row" class="text-end fw-normal">Total del presupuesto:</th>
+                <td class="text-center"><strong>@Model.MontoPresupuesto().ToString("C")</strong></td>
+                <th scope="row" class="text-end fw-normal">Total + IVA:</th>
+                <td class="text-center"><strong>@Model.MontoPresupuestoConIva().ToString("C")</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+</article>

@@ -2,7 +2,7 @@ namespace Models;
 
 public class Presupuesto
 {
-    private static float IVA = 0.21f;
+    public static float IVA = 0.21f;
 
     private int id;
     private string nombreDestinatario;

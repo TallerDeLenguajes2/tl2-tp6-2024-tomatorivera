@@ -19,4 +19,9 @@ public class PresupuestoController : Controller
     public IActionResult Listar() {
         return View(repositorioPresupuestos.Listar());
     }
+
+    [HttpGet]
+    public IActionResult VerDetalle(int id) {
+        return View(repositorioPresupuestos.Obtener(id));
+    }
 }
