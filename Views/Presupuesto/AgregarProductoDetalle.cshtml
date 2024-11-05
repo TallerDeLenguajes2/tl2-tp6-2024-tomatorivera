@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "Agregar productos";
+    var productos = (IEnumerable<SelectListItem>) ViewData["Productos"];
+}
+@model int
+
+<h3 class="border-bottom my-4">Agregando productos al detalle</h3>
+<form asp-controller="Presupuesto" asp-action="AgregarProductoDetalle" method="post" class="w-75 mx-auto p-4">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" name="idPresupuesto" id="idPresupuesto" value="@Model">
+    <section class="form-group mb-2">
+        <label for="Cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" name="cantidad" class="form-control" min="1" required>
+    </section>
+    <section class="from-group mb-2">
+        <label for="Producto">Seleccione el producto:</label>
+        <select name="producto" id="producto" asp-items="@productos" class="form-select"></select>
+    </section>
+    <section class="d-flex justify-content-center align-items-center mt-4 gap-3">
+        <input type="submit" value="Agregar producto" class="btn btn-primary">
+        <input type="reset" value="Limpiar formulario" class="btn btn-outline-primary">
+    </section>
+</form>

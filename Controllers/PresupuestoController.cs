@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
 using Persistence;
 
@@ -7,12 +8,14 @@ namespace tl2_tp6_2024_tomatorivera.Controllers;
 public class PresupuestoController : Controller
 {
     private readonly ILogger<PresupuestoController> _logger;
-    private readonly IRepository<Presupuesto> repositorioPresupuestos;
+    private readonly IPresupuestoRepository repositorioPresupuestos;
+    private readonly IRepository<Producto> repositorioProductos;
 
     public PresupuestoController(ILogger<PresupuestoController> logger)
     {
         _logger = logger;
         repositorioPresupuestos = new PresupuestoRepositoryImpl();
+        repositorioProductos = new ProductoRepositoryImpl();
     }
 
     [HttpGet]
@@ -23,5 +26,22 @@ public class PresupuestoController : Controller
     [HttpGet]
     public IActionResult VerDetalle(int id) {
         return View(repositorioPresupuestos.Obtener(id));
+    }
+
+    [HttpGet]
+    public IActionResult AgregarProductoDetalle(int id) {
+        ViewData["Productos"] = repositorioProductos.Listar()
+                                                    .Select(p => new SelectListItem()
+                                                                {
+                                                                    Value = p.IdProducto.ToString(),
+                                                                    Text = p.Descripcion
+                                                                });
+        return View(id);
+    }
+
+    [HttpPost]
+    public IActionResult AgregarProductoDetalle(int idPresupuesto, int cantidad, int producto) {
+        repositorioPresupuestos.InsertarDetalle(idPresupuesto, producto, cantidad);
+        return RedirectToAction("Listar");
     }
 }

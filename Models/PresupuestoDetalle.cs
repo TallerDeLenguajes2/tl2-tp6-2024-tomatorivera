@@ -5,6 +5,12 @@ public class PresupuestoDetalle
     private int cantidad;
     private Producto producto;
 
+    public PresupuestoDetalle()
+    {
+        cantidad = 0;
+        producto = new Producto();
+    }
+
     public PresupuestoDetalle(int cantidad, Producto producto)
     {
         this.cantidad = cantidad;
