@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Presupuestos";
+}
+@using Models
+@model List<Presupuesto>
+
+<h2 class="border-bottom my-4">@ViewData["Title"]</h2>
+<article class="table-responsive">
+    <section class="text-end mb-3">
+        <a asp-controller="Presupuesto" asp-action="AltaPresupuesto" class="btn btn-success">+ Crear nuevo presupuesto</a>
+    </section>
+    
+    <table class="table table-striped table-hover">
+        <thead class="table-dark text-center">
+            <th>Nombre destinatario</th>
+            <th>Fecha de creación</th>
+            <th>Detalle</th>
+        </thead>
+        <tbody class="text-center">
+            @foreach (Presupuesto presupuesto in Model) {
+                <tr>
+                    <td>@presupuesto.NombreDestinatario</td>
+                    <td>@presupuesto.FechaCreacion</td>
+                    <td>
+                        <a asp-controller="Presupuesto" asp-action="VerDetalle" asp-route-id="@presupuesto.Id" class="btn btn-primary">Ver detalle</a>
+                        <a asp-controller="Presupuesto" asp-action="AltaProductoDetalle" asp-route-id="@presupuesto.Id" class="btn btn-outline-primary">Agregar productos</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</article>
