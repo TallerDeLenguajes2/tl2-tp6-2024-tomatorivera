@@ -15,15 +15,10 @@ public class ProductoController : Controller
         repositorioProductos = new ProductoRepositoryImpl();
     }
 
-    public IActionResult Operaciones()
-    {
-        return View();
-    }
-
     [HttpGet]
     public IActionResult Listar()
     {
-        return View("Listar", repositorioProductos.Listar());
+        return View(repositorioProductos.Listar());
     }
 
     public IActionResult Alta()
