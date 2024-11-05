@@ -44,4 +44,15 @@ public class PresupuestoController : Controller
         repositorioPresupuestos.InsertarDetalle(idPresupuesto, producto, cantidad);
         return RedirectToAction("Listar");
     }
+
+    [HttpGet]
+    public IActionResult AltaPresupuesto() {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult AltaPresupuesto(Presupuesto presupuesto) {
+        repositorioPresupuestos.Insertar(presupuesto);
+        return RedirectToAction("Listar");
+    }
 }
