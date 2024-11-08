@@ -20,7 +20,7 @@
         <tbody class="text-center">
             @foreach (Presupuesto presupuesto in Model) {
                 <tr>
-                    <td>@presupuesto.NombreDestinatario</td>
+                    <td>@presupuesto.Cliente.Nombre</td>
                     <td>@presupuesto.FechaCreacion</td>
                     <td>
                         <a asp-controller="Presupuesto" asp-action="VerDetalle" asp-route-id="@presupuesto.Id" class="btn btn-primary">Ver detalle</a>

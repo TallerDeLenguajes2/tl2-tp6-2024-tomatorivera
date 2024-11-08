@@ -5,38 +5,36 @@ public class Presupuesto
     public static float IVA = 0.21f;
 
     private int id;
-    private string nombreDestinatario;
+    private Cliente cliente;
     private string fechaCreacion;
     private List<PresupuestoDetalle> detalle;
 
     public Presupuesto()
     {
         id = -1;
-        nombreDestinatario = string.Empty;
+        cliente = new Cliente();
         fechaCreacion = string.Empty;
         detalle = new List<PresupuestoDetalle>();
     }
 
-    public Presupuesto(string nombreDestinatario, string fechaCreacion)
+    public Presupuesto(int id, string fechaCreacion) : this()
     {
-        this.nombreDestinatario = nombreDestinatario;
+        this.id = id;
         this.fechaCreacion = fechaCreacion;
-        id = -1;
-        detalle = new List<PresupuestoDetalle>();
     }
 
-    public Presupuesto(int idPresupuesto, string nombreDestinatario, string fechaCreacion)
+    public Presupuesto(int idPresupuesto, Cliente cliente, string fechaCreacion)
     {
         this.id = idPresupuesto;
-        this.nombreDestinatario = nombreDestinatario;
+        this.cliente = cliente;
         this.fechaCreacion = fechaCreacion;
         this.detalle = new List<PresupuestoDetalle>();
     }
 
     public int Id { get => id; set => id = value; }
-    public string NombreDestinatario { get => nombreDestinatario; set => nombreDestinatario = value; }
     public string FechaCreacion { get => fechaCreacion; set => fechaCreacion = value; }
     public List<PresupuestoDetalle> Detalle { get => detalle; set => detalle = value; }
+    public Cliente Cliente { get => cliente; set => cliente = value; }
 
     public float MontoPresupuesto()
     {

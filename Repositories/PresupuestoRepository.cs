@@ -18,11 +18,11 @@ public class PresupuestoRepositoryImpl : IPresupuestoRepository
         {
             connection.Open();
 
-            var sqlQuery = @"INSERT INTO Presupuestos (NombreDestinatario, FechaCreacion) 
-                             VALUES ($nombreDestinatario, $fechaCreacion)";
+            var sqlQuery = @"INSERT INTO Presupuestos (id_cliente, FechaCreacion) 
+                             VALUES ($idCliente, $fechaCreacion)";
             using (var sqlCmd = new SqliteCommand(sqlQuery, connection))
             {
-                sqlCmd.Parameters.AddWithValue("$nombreDestinatario", obj.NombreDestinatario);
+                sqlCmd.Parameters.AddWithValue("$idCliente", obj.Cliente.Id);
                 sqlCmd.Parameters.AddWithValue("$fechaCreacion", obj.FechaCreacion);
                 sqlCmd.ExecuteNonQuery();
             }
@@ -41,25 +41,32 @@ public class PresupuestoRepositoryImpl : IPresupuestoRepository
         {
             connection.Open();
 
-            var sqlQuery = @"SELECT p.idPresupuesto, p.NombreDestinatario, p.FechaCreacion, pr.idProducto, pr.Descripcion, pr.Precio, pd.Cantidad 
-                             FROM Presupuestos p
-                             LEFT JOIN PresupuestosDetalle pd USING (idPresupuesto)
-                             LEFT JOIN Productos pr USING (idProducto)";
+            var sqlQuery = @"SELECT P.idPresupuesto, P.FechaCreacion, C.id_cliente, C.nombre, C.email, C.telefono, PR.idProducto, PR.Descripcion, PR.Precio, PD.Cantidad
+                             FROM Presupuestos P
+                             INNER JOIN Clientes C USING (id_cliente)
+                             LEFT JOIN PresupuestosDetalle PD USING (idPresupuesto)
+                             LEFT JOIN Productos PR USING (idProducto)";
 
             using (var sqlCmd = new SqliteCommand(sqlQuery, connection))
             using (var sqlReader = sqlCmd.ExecuteReader())
             {
                 while (sqlReader.Read())
                 {
+                    // Genero el presupuesto si es que aún no lo generé (un mismo presupuesto
+                    // puede aparecer varias veces por el join)
                     int idPresupuesto = sqlReader.GetInt32(0);
-
                     if (!presupuestos.TryGetValue(idPresupuesto, out var presupuesto))
                         presupuesto = generarPresupuesto(sqlReader);
 
-                    if (!sqlReader.IsDBNull(3))
+                    // Genero los datos del cliente
+                    presupuesto.Cliente = new Cliente(sqlReader.GetInt32(2), sqlReader.GetString(3), sqlReader.GetString(4), sqlReader.GetString(5));;
+
+                    // Verifico si el presupuesto tiene detalle, de ser así, genero el
+                    // objeto producto y detalle, y los agrego al presupuesto
+                    if (!sqlReader.IsDBNull(6))
                     {
-                        var producto = new Producto(sqlReader.GetInt32(3), sqlReader.GetString(4), sqlReader.GetInt32(5));
-                        var detalle = new PresupuestoDetalle(sqlReader.GetInt32(6), producto);
+                        var producto = new Producto(sqlReader.GetInt32(6), sqlReader.GetString(7), sqlReader.GetInt32(8));
+                        var detalle = new PresupuestoDetalle(sqlReader.GetInt32(9), producto);
 
                         presupuesto.Detalle.Add(detalle);
                     }
@@ -98,12 +105,12 @@ public class PresupuestoRepositoryImpl : IPresupuestoRepository
             connection.Open();
 
             var sqlQuery = @"UPDATE Presupuestos 
-                             SET NombreDestinatario=$nombreDestinatario, FechaCreacion=$fechaCreacion 
+                             SET id_cliente=$idCliente, FechaCreacion=$fechaCreacion 
                              WHERE idPresupuesto=$id";
 
             using (var sqlCmd = new SqliteCommand(sqlQuery, connection))
             {
-                sqlCmd.Parameters.AddWithValue("$nombreDestinatario", obj.NombreDestinatario);
+                sqlCmd.Parameters.AddWithValue("$idCliente", obj.Cliente.Id);
                 sqlCmd.Parameters.AddWithValue("$fechaCreacion", obj.FechaCreacion);
                 sqlCmd.Parameters.AddWithValue("$id", obj.Id);
                 sqlCmd.ExecuteNonQuery();
@@ -121,10 +128,11 @@ public class PresupuestoRepositoryImpl : IPresupuestoRepository
         {
             connection.Open();
 
-            var sqlQuery = @"SELECT p.idPresupuesto, p.NombreDestinatario, p.FechaCreacion, pr.idProducto, pr.Descripcion, pr.Precio, pd.Cantidad
-                             FROM Presupuestos p 
-                             LEFT JOIN PresupuestosDetalle pd USING (idPresupuesto)
-                             LEFT JOIN Productos pr USING (idProducto)
+            var sqlQuery = @"SELECT P.idPresupuesto, P.FechaCreacion, C.id_cliente, C.nombre, C.email, C.telefono, PR.idProducto, PR.Descripcion, PR.Precio, PD.Cantidad
+                             FROM Presupuestos P
+                             INNER JOIN Clientes C USING (id_cliente)
+                             LEFT JOIN PresupuestosDetalle PD USING (idPresupuesto)
+                             LEFT JOIN Productos PR USING (idProducto)
                              WHERE idPresupuesto=$id";
 
             using (var sqlCmd = new SqliteCommand(sqlQuery, connection))
@@ -134,13 +142,23 @@ public class PresupuestoRepositoryImpl : IPresupuestoRepository
                 {
                     while (sqlReader.Read())
                     {
+                        // Genero el presupuesto si es que aún no está generado, al ser un JOIN
+                        // sus datos se traen en cada fila
                         if (presupuestoBuscado.Id == -1)
                             presupuestoBuscado = generarPresupuesto(sqlReader);
 
-                        if (!sqlReader.IsDBNull(3))
+                        // Genero los datos del cliente asociado al presupuesto
+                        // si es que aún no lo he leído
+                        if (presupuestoBuscado.Cliente.Id == -1)
+                            presupuestoBuscado.Cliente = new Cliente(sqlReader.GetInt32(2), sqlReader.GetString(3), sqlReader.GetString(4), sqlReader.GetString(5));
+
+                        // Verifico si el presupuesto tiene detalle, de ser así, genero el
+                        // objeto producto y detalle, y los agrego al presupuesto
+                        if (!sqlReader.IsDBNull(6))
                         {
-                            var producto = new Producto(sqlReader.GetInt32(3), sqlReader.GetString(4), sqlReader.GetInt32(5));
-                            var detalle = new PresupuestoDetalle(sqlReader.GetInt32(6), producto);
+                            var producto = new Producto(sqlReader.GetInt32(6), sqlReader.GetString(7), sqlReader.GetInt32(8));
+                            var detalle = new PresupuestoDetalle(sqlReader.GetInt32(9), producto);
+
                             presupuestoBuscado.Detalle.Add(detalle);
                         }
                     }
@@ -182,15 +200,6 @@ public class PresupuestoRepositoryImpl : IPresupuestoRepository
     /// traídos del reader o una instancia por defecto si es que ocurre algun error</returns>
     private Presupuesto generarPresupuesto(SqliteDataReader reader)
     {
-        try
-        {
-            return new Presupuesto(reader.GetInt32(0),
-                                   reader.GetString(1),
-                                   reader.GetString(2));
-        }
-        catch (Exception)
-        {
-            return new Presupuesto();
-        }
+        return new Presupuesto(reader.GetInt32(0), reader.GetString(1));
     }
 }

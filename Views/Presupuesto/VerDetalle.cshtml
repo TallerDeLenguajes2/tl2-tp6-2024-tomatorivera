@@ -9,7 +9,7 @@
     <ul class="my-4 ps-5">
         <li><strong>Detalle del presupuesto ID @Model.Id</strong></li>
         <ul>
-            <li>Destinatario: <strong>@Model.NombreDestinatario</strong></li>
+            <li>Destinatario: <strong>@Model.Cliente.Nombre</strong></li>
             <li>Fecha de creación: <strong>@Model.FechaCreacion</strong></li>
             <li>Total de productos: <strong>@Model.CantidadProductos()</strong></li>
         </ul>

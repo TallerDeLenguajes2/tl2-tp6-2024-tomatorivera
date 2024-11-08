@@ -4,7 +4,7 @@
 @model Models.Presupuesto
 
 <section class="container">
-    <p class="text-center">¿Está seguro de que desea eliminar el presupuesto para '<strong>@Model.NombreDestinatario</strong>'?</p>
+    <p class="text-center">¿Está seguro de que desea eliminar el presupuesto para '<strong>@Model.Cliente.Nombre</strong>'?</p>
     <div class="d-flex justify-content-center align-items-center gap-2">
         <a asp-controller="Presupuesto" asp-action="EliminarPresupuesto" asp-route-id="@Model.Id" class="btn btn-danger">Confirmar</a>
         <a asp-controller="Presupuesto" asp-action="Listar" class="btn btn-outline-danger">Cancelar</a>
