@@ -118,16 +118,8 @@ public class ProductoRepositoryImpl : IRepository<Producto>
     /// traídos del reader o una instancia por defecto si es que ocurre algun error</returns>
     private Producto generarProducto(SqliteDataReader reader)
     {
-        try
-        {
-            return new Producto(reader.GetInt32(0),
-                                reader.GetString(1),
-                                reader.GetInt32(2));
-        }
-        catch (Exception ex)
-        {
-            System.Console.WriteLine($"Error en la generación de producto: {ex.Message}");
-            return new Producto();
-        }
+        return new Producto(reader.GetInt32(0),
+                            reader.GetString(1),
+                            reader.GetInt32(2));
     }
 }
