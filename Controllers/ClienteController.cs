@@ -23,5 +23,10 @@ namespace tl2_tp6_2024_tomatorivera.Controllers
         public IActionResult Listar() {
             return View(_repositorioClientes.Listar());
         }
+
+        [HttpGet]
+        public IActionResult Alta() {
+            return View();
+        }
     }
 }
