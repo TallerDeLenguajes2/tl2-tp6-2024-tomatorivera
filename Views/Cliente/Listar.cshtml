@@ -30,15 +30,58 @@
                             </svg>
                             Modificar
                         </a>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#eliminarCliente" data-clienteid="@cliente.Id" class="btn-eliminar btn btn-danger">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                            </svg>
+                            Eliminar
+                        </button>
+                        <!--
                         <a asp-controller="Cliente" asp-action="Eliminar" asp-route-id="@cliente.Id" class="btn btn-danger">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                             </svg>
                             Eliminar
                         </a>
+                        -->
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </article>
+
+<!-- Modal -->
+<div class="modal fade" id="eliminarCliente" data-bs-backdrop="eliminar" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <form asp-controller="Cliente" asp-action="Eliminar" method="post">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabel">Eliminar cliente</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">¿Está seguro que desea eliminar el cliente?</p>
+                <input type="hidden" name="id" id="id" value="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    const inputId = document.getElementById("id");
+
+    var idCliente = 0;
+    var botonesEliminar = document.getElementsByClassName("btn-eliminar");
+    Array.from(botonesEliminar).forEach((btn) => {
+        btn.addEventListener('click', () => {
+            idCliente = btn.getAttribute("data-clienteid");
+            inputId.value = idCliente;
+        })
+    });
+</script>

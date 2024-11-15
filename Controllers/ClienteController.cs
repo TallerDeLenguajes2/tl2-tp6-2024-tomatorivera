@@ -35,5 +35,12 @@ namespace tl2_tp6_2024_tomatorivera.Controllers
             _repositorioClientes.Insertar(cliente);
             return RedirectToAction("Listar");
         }
+
+        [HttpPost]
+        public IActionResult Eliminar(int id)
+        {
+            _repositorioClientes.Eliminar(id);
+            return RedirectToAction("Listar");
+        }
     }
 }
