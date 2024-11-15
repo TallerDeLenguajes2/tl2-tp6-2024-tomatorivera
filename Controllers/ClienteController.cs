@@ -28,5 +28,12 @@ namespace tl2_tp6_2024_tomatorivera.Controllers
         public IActionResult Alta() {
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Alta([FromForm] Cliente cliente)
+        {
+            _repositorioClientes.Insertar(cliente);
+            return RedirectToAction("Listar");
+        }
     }
 }
