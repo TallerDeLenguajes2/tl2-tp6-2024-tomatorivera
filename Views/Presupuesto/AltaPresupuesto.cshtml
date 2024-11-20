@@ -1,19 +1,19 @@
 @{
     ViewData["Title"] = "Alta de presupuesto";
-    var clientes = (IEnumerable<SelectListItem>) ViewData["Clientes"];
 }
-@model Models.Presupuesto
+@model tl2_tp6_2024_tomatorivera.ViewModels.AltaPresupuestoViewModel
 
 <h2 class="border-bottom">Alta de presupuesto</h2>
 <form asp-controller="Presupuesto" asp-action="AltaPresupuesto" method="post" class="w-75 mx-auto p-4 my-4">
     <section class="from-group mb-2">
-        <label for="cliente">Seleccione el cliente:</label>
-        <select name="cliente" id="cliente" asp-items="@clientes" class="form-select"></select>
+        <label for="IdCliente">Seleccione el cliente:</label>
+        <select name="IdCliente" id="IdCliente" asp-items="@Model.Clientes" class="form-select"></select>
+        <span asp-validation-for="@Model.Clientes" class="text-danger"></span>
     </section>
     <section class="form-group mb-3">
         <label for="FechaCreacion">Fecha de creacion (yyyy-MM-dd):</label>
-        <input asp-for="FechaCreacion" class="form-control" required>
-        <span asp-validation-for="FechaCreacion" class="text-danger"></span>
+        <input asp-for="@Model.FechaCreacion" class="form-control" required>
+        <span asp-validation-for="@Model.FechaCreacion" class="text-danger"></span>
     </section>
     <section class="d-flex justify-content-center align-items-center my-2 gap-3">
         <input type="submit" value="Crear presupuesto" class="btn btn-primary">

@@ -23,12 +23,10 @@ public class Presupuesto
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Presupuesto(int idPresupuesto, Cliente cliente, string fechaCreacion)
+    public Presupuesto(Cliente cliente, string fechaCreacion) : this()
     {
-        this.id = idPresupuesto;
         this.cliente = cliente;
         this.fechaCreacion = fechaCreacion;
-        this.detalle = new List<PresupuestoDetalle>();
     }
 
     public int Id { get => id; set => id = value; }

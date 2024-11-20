@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Models;
 using Persistence;
+using tl2_tp6_2024_tomatorivera.ViewModels;
 
 namespace tl2_tp6_2024_tomatorivera.Controllers;
 
@@ -10,12 +11,14 @@ public class PresupuestoController : Controller
     private readonly ILogger<PresupuestoController> _logger;
     private readonly IPresupuestoRepository repositorioPresupuestos;
     private readonly IRepository<Producto> repositorioProductos;
+    private readonly IRepository<Cliente> repositorioClientes;
 
     public PresupuestoController(ILogger<PresupuestoController> logger)
     {
         _logger = logger;
         repositorioPresupuestos = new PresupuestoRepositoryImpl();
         repositorioProductos = new ProductoRepositoryImpl();
+        repositorioClientes = new ClienteRepositoryImpl();
     }
 
     [HttpGet]
@@ -47,12 +50,29 @@ public class PresupuestoController : Controller
 
     [HttpGet]
     public IActionResult AltaPresupuesto() {
-        return View();
+        var clientes = repositorioClientes.Listar()
+                                          .Select(c => new SelectListItem()
+                                                {
+                                                    Value = c.Id.ToString(),
+                                                    Text = c.Nombre
+                                                });
+        return View(new AltaPresupuestoViewModel(clientes));
     }
 
     [HttpPost]
-    public IActionResult AltaPresupuesto(Presupuesto presupuesto) {
-        repositorioPresupuestos.Insertar(presupuesto);
+    public IActionResult AltaPresupuesto(AltaPresupuestoViewModel presupuestoViewModel) {
+        var cliente = repositorioClientes.Obtener(presupuestoViewModel.IdCliente);
+        if (cliente.Id == -1)
+        {
+            ModelState.AddModelError("Clientes", "El cliente seleccionado no existe");
+        }
+        
+        if (!ModelState.IsValid)
+        {
+            return View(presupuestoViewModel.MapearClientes(repositorioClientes.Listar()));
+        }
+
+        repositorioPresupuestos.Insertar(new Presupuesto(cliente, presupuestoViewModel.FechaCreacion));
         return RedirectToAction("Listar");
     }
 
