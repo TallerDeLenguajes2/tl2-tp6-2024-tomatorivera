@@ -1,4 +1,12 @@
+using Models;
+using Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Registro los repositorios como dependencias
+builder.Services.AddScoped<IPresupuestoRepository, PresupuestoRepositoryImpl>();
+builder.Services.AddScoped<IRepository<Producto>, ProductoRepositoryImpl>();
+builder.Services.AddScoped<IRepository<Cliente>, ClienteRepositoryImpl>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

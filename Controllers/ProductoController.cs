@@ -10,10 +10,10 @@ public class ProductoController : Controller
     private readonly ILogger<ProductoController> _logger;
     private readonly IRepository<Producto> repositorioProductos;
 
-    public ProductoController(ILogger<ProductoController> logger)
+    public ProductoController(ILogger<ProductoController> logger, IRepository<Producto> repositorioProductos)
     {
         _logger = logger;
-        repositorioProductos = new ProductoRepositoryImpl();
+        this.repositorioProductos = repositorioProductos;
     }
 
     [HttpGet]

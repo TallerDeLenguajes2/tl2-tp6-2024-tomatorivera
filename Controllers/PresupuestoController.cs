@@ -13,12 +13,12 @@ public class PresupuestoController : Controller
     private readonly IRepository<Producto> repositorioProductos;
     private readonly IRepository<Cliente> repositorioClientes;
 
-    public PresupuestoController(ILogger<PresupuestoController> logger)
+    public PresupuestoController(ILogger<PresupuestoController> logger, IPresupuestoRepository repositorioPresupuestos, IRepository<Producto> repositorioProductos, IRepository<Cliente> repositorioClientes)
     {
         _logger = logger;
-        repositorioPresupuestos = new PresupuestoRepositoryImpl();
-        repositorioProductos = new ProductoRepositoryImpl();
-        repositorioClientes = new ClienteRepositoryImpl();
+        this.repositorioPresupuestos = repositorioPresupuestos;
+        this.repositorioProductos = repositorioProductos;
+        this.repositorioClientes = repositorioClientes;
     }
 
     [HttpGet]

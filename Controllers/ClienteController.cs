@@ -14,10 +14,10 @@ namespace tl2_tp6_2024_tomatorivera.Controllers
         private readonly ILogger<ClienteController> _logger;
         private readonly IRepository<Cliente> _repositorioClientes;
         
-        public ClienteController(ILogger<ClienteController> logger)
+        public ClienteController(ILogger<ClienteController> logger, IRepository<Cliente> repositorioClientes)
         {
             _logger = logger;
-            _repositorioClientes = new ClienteRepositoryImpl();
+            _repositorioClientes = repositorioClientes;
         }
 
         [HttpGet]
