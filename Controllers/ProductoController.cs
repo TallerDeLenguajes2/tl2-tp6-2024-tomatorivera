@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Persistence;
+using tl2_tp6_2024_tomatorivera.ViewModels;
 
 namespace tl2_tp6_2024_tomatorivera.Controllers;
 
@@ -27,9 +28,14 @@ public class ProductoController : Controller
     }
 
     [HttpPost("api/AltaProducto")]
-    public IActionResult AltaProducto(Producto producto)
+    public IActionResult AltaProducto(AltaProductoViewModel productoViewModel)
     {
-        repositorioProductos.Insertar(producto);
+        if (!ModelState.IsValid)
+        {
+            return View("Alta");
+        }
+
+        repositorioProductos.Insertar(new Producto(productoViewModel.Descripcion, productoViewModel.Precio));
         return RedirectToAction("Listar");
     }
 

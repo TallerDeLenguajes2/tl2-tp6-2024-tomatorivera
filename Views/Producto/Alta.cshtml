@@ -1,24 +1,26 @@
 @{
     ViewData["Title"] = "Alta producto";
 }
-@model Models.Producto
+@model tl2_tp6_2024_tomatorivera.ViewModels.AltaProductoViewModel
 
 <section class="container">
     <h2 class="border-bottom my-3 w-50 mx-auto">Alta de productos</h2>
     <form asp-controller="Producto" asp-action="AltaProducto" method="post" class="w-50 mx-auto">
         <section class="form-group mb-3">
-            <label for="descripcion">Descripción</label>
+            <label asp-for="Descripcion">Descripción</label>
             <div class="input-group">
                 <span class="input-group-text" id="descripcion-addon">#</span>
-                <input asp-for="Descripcion" class="form-control" aria-describedby="descripcion-addon" required>
+                <input asp-for="Descripcion" class="form-control" aria-describedby="descripcion-addon">
             </div>
+            <span asp-validation-for="Descripcion" class="text-danger"></span>
         </section>
         <section class="form-group">
-            <label for="precio">Precio</label>
+            <label asp-for="Precio">Precio</label>
             <div class="input-group">
                 <span class="input-group-text" id="precio-addon">$</span>
-                <input asp-for="Precio" class="form-control" aria-describedby="precio-addon" required>
+                <input asp-for="Precio" class="form-control" aria-describedby="precio-addon">
             </div>
+            <span asp-validation-for="Precio" class="text-danger"></span>
         </section>
         <section class="d-flex justify-content-center align-items-center gap-2 my-3">
             <input type="submit" value="Dar de alta" class="btn btn-primary">
