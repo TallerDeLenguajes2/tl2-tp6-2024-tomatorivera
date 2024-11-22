@@ -6,6 +6,7 @@ namespace Persistence;
 public interface IUsuarioRepository
 {
     Usuario GetUsuario(string username, string pass);
+    void Insertar(Usuario usuario);
 }
 
 public class UsuarioRepositoryImpl : IUsuarioRepository
@@ -35,6 +36,27 @@ public class UsuarioRepositoryImpl : IUsuarioRepository
         }
 
         return usuario;
+    }
+
+    public void Insertar(Usuario usuario)
+    {
+        using (var connection = new SqliteConnection(connectionString))
+        {
+            connection.Open();
+            
+            var sqlQuery = @"INSERT INTO usuarios (nombre, usuario, contraseña, rol)
+                             VALUES ($nombre, $usuario, $contraseña, $rol)";
+            using (var sqlCmd = new SqliteCommand(sqlQuery, connection))
+            {
+                sqlCmd.Parameters.AddWithValue("$nombre", usuario.Nombre);
+                sqlCmd.Parameters.AddWithValue("$usuario", usuario.Username);
+                sqlCmd.Parameters.AddWithValue("$contraseña", usuario.Contrasenia);
+                sqlCmd.Parameters.AddWithValue("$rol", usuario.Rol);
+                sqlCmd.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
     }
 
     private Usuario LeerUsuario(SqliteDataReader sqlReader)
