@@ -33,18 +33,19 @@ public class PresupuestoController : Controller
 
     [HttpGet]
     public IActionResult AgregarProductoDetalle(int id) {
-        ViewData["Productos"] = repositorioProductos.Listar()
-                                                    .Select(p => new SelectListItem()
-                                                                {
-                                                                    Value = p.IdProducto.ToString(),
-                                                                    Text = p.Descripcion
-                                                                });
-        return View(id);
+        var productos = repositorioProductos.Listar()
+                                            .Select(p => new SelectListItem()
+                                                    {
+                                                        Value = p.IdProducto.ToString(),
+                                                        Text = p.Descripcion
+                                                    }
+                                            );
+        return View(new AltaProductoDetalleViewModel(id, productos));
     }
 
     [HttpPost]
-    public IActionResult AgregarProductoDetalle(int idPresupuesto, int cantidad, int producto) {
-        repositorioPresupuestos.InsertarDetalle(idPresupuesto, producto, cantidad);
+    public IActionResult AgregarProductoDetalle(AltaProductoDetalleViewModel datos) {
+        repositorioPresupuestos.InsertarDetalle(datos.IdPresupuesto, datos.IdProducto, datos.Cantidad);
         return RedirectToAction("Listar");
     }
 

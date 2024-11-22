@@ -1,20 +1,19 @@
 @{
     ViewData["Title"] = "Agregar productos";
-    var productos = (IEnumerable<SelectListItem>) ViewData["Productos"];
 }
-@model int
+@model tl2_tp6_2024_tomatorivera.ViewModels.AltaProductoDetalleViewModel
 
 <h3 class="border-bottom my-4">Agregando productos al detalle</h3>
 <form asp-controller="Presupuesto" asp-action="AgregarProductoDetalle" method="post" class="w-75 mx-auto p-4">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" name="idPresupuesto" id="idPresupuesto" value="@Model">
+    <input type="hidden" name="idPresupuesto" id="idPresupuesto" value="@Model.IdPresupuesto">
     <section class="form-group mb-2">
-        <label for="Cantidad">Cantidad:</label>
-        <input type="number" id="cantidad" name="cantidad" class="form-control" min="1" required>
+        <label asp-for="Cantidad">Cantidad:</label>
+        <input asp-for="Cantidad" class="form-control" min="1" required>
     </section>
     <section class="from-group mb-2">
-        <label for="Producto">Seleccione el producto:</label>
-        <select name="producto" id="producto" asp-items="@productos" class="form-select"></select>
+        <label for="IdProducto">Seleccione el producto:</label>
+        <select name="IdProducto" id="IdProducto" asp-items="@Model.Productos" class="form-select"></select>
     </section>
     <section class="d-flex justify-content-center align-items-center mt-4 gap-3">
         <input type="submit" value="Agregar producto" class="btn btn-primary">
