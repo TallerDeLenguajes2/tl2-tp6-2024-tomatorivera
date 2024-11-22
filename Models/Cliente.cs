@@ -15,6 +15,13 @@ public class Cliente
         telefono = string.Empty;
     }
 
+    public Cliente(string nombre, string email, string telefono)
+    {
+        this.nombre = nombre;
+        this.email = email;
+        this.telefono = telefono;
+    }
+
     public Cliente(int id, string nombre, string email, string telefono)
     {
         this.id = id;

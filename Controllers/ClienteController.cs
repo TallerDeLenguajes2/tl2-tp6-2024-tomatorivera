@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Persistence;
+using tl2_tp6_2024_tomatorivera.ViewModels;
 
 namespace tl2_tp6_2024_tomatorivera.Controllers
 {
@@ -30,9 +31,14 @@ namespace tl2_tp6_2024_tomatorivera.Controllers
         }
 
         [HttpPost]
-        public IActionResult Alta([FromForm] Cliente cliente)
+        public IActionResult Alta([FromForm] AltaClienteViewModel clienteViewModel)
         {
-            _repositorioClientes.Insertar(cliente);
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            _repositorioClientes.Insertar(new Cliente(clienteViewModel.Nombre, clienteViewModel.Email, clienteViewModel.Telefono));
             return RedirectToAction("Listar");
         }
 
