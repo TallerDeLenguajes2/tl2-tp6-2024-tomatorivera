@@ -17,17 +17,21 @@ public class ProductoController : Controller
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult Listar()
     {
         return View(repositorioProductos.Listar());
     }
 
+    [HttpGet]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult Alta()
     {
         return View();
     }
 
     [HttpPost("api/AltaProducto")]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult AltaProducto(AltaProductoViewModel productoViewModel)
     {
         if (!ModelState.IsValid)
@@ -40,12 +44,14 @@ public class ProductoController : Controller
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult Modificar(int id)
     {
         return View(repositorioProductos.Obtener(id));
     }
 
     [HttpPost("api/ModificarProducto")]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult ModificarProducto(Producto producto)
     {
         repositorioProductos.Modificar(producto.IdProducto, producto);
@@ -53,11 +59,13 @@ public class ProductoController : Controller
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult Eliminar(int id) {
         return View(repositorioProductos.Obtener(id));
     }
 
     [HttpGet("api/EliminarProducto/{id}")]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult EliminarProducto(int id)
     {
         repositorioProductos.Eliminar(id);

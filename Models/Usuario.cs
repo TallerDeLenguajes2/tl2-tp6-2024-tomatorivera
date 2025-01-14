@@ -6,7 +6,7 @@ public class Usuario
     private string _nombre;
     private string _username;
     private string _pass;
-    private string _rol;
+    private Int32 _rol;
 
     public Usuario()
     {
@@ -14,10 +14,10 @@ public class Usuario
         _nombre = string.Empty;
         _username = string.Empty;
         _pass = string.Empty;
-        _rol = string.Empty; 
+        _rol = 0; 
     }
 
-    public Usuario(int id, string nombre, string username, string pass, string rol)
+    public Usuario(int id, string nombre, string username, string pass, int rol)
     {
         _id = id;
         _nombre = nombre;
@@ -30,5 +30,5 @@ public class Usuario
     public string Nombre { get => _nombre; set => _nombre = value; }
     public string Username { get => _username; set => _username = value; }
     public string Contrasenia { get => _pass; set => _pass = value; }
-    public string Rol { get => _rol; set => _rol = value; }
+    public int Rol { get => _rol; set => _rol = value; }
 }

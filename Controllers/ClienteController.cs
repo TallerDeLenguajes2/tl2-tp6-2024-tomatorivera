@@ -21,16 +21,19 @@ namespace tl2_tp6_2024_tomatorivera.Controllers
         }
 
         [HttpGet]
+        [AccessLevel(AccessLevel.CLIENTE)]
         public IActionResult Listar() {
             return View(_repositorioClientes.Listar());
         }
 
         [HttpGet]
+        [AccessLevel(AccessLevel.ADMINISTRADOR)]
         public IActionResult Alta() {
             return View();
         }
 
         [HttpPost]
+        [AccessLevel(AccessLevel.ADMINISTRADOR)]
         public IActionResult Alta([FromForm] AltaClienteViewModel clienteViewModel)
         {
             if (!ModelState.IsValid)
@@ -43,6 +46,7 @@ namespace tl2_tp6_2024_tomatorivera.Controllers
         }
 
         [HttpPost]
+        [AccessLevel(AccessLevel.ADMINISTRADOR)]
         public IActionResult Eliminar(int id)
         {
             _repositorioClientes.Eliminar(id);
@@ -50,12 +54,14 @@ namespace tl2_tp6_2024_tomatorivera.Controllers
         }
 
         [HttpGet]
+        [AccessLevel(AccessLevel.ADMINISTRADOR)]
         public IActionResult Modificar(int id)
         {
             return View(_repositorioClientes.Obtener(id));
         }
 
         [HttpPost]
+        [AccessLevel(AccessLevel.ADMINISTRADOR)]
         public IActionResult Modificar([FromForm] Cliente cliente)
         {
             _repositorioClientes.Modificar(cliente.Id, cliente);

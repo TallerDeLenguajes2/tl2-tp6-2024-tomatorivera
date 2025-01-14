@@ -65,6 +65,6 @@ public class UsuarioRepositoryImpl : IUsuarioRepository
                            Convert.ToString(sqlReader["nombre"]) ?? string.Empty,
                            Convert.ToString(sqlReader["usuario"]) ?? string.Empty,
                            Convert.ToString(sqlReader["contraseña"]) ?? string.Empty,
-                           Convert.ToString(sqlReader["rol"]) ?? string.Empty);
+                           Convert.ToInt32(sqlReader["rol"]));
     }
 }

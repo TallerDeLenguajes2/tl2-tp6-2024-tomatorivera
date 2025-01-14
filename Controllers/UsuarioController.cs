@@ -50,7 +50,7 @@ public class UsuarioController : Controller {
         // Creo la variable de sesión
         HttpContext.Session.SetString("IsAuth", "true");
         HttpContext.Session.SetString("User", user.Username);
-        HttpContext.Session.SetString("AccessLevel", user.Rol.ToString());
+        HttpContext.Session.SetInt32("AccessLevel", user.Rol);
 
         // Redirige a la pag. principal
         return RedirectToAction("Index", "Home");

@@ -22,16 +22,19 @@ public class PresupuestoController : Controller
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult Listar() {
         return View(repositorioPresupuestos.Listar());
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.CLIENTE)]
     public IActionResult VerDetalle(int id) {
         return View(repositorioPresupuestos.Obtener(id));
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.ADMINISTRADOR)]
     public IActionResult AgregarProductoDetalle(int id) {
         var productos = repositorioProductos.Listar()
                                             .Select(p => new SelectListItem()
@@ -44,12 +47,14 @@ public class PresupuestoController : Controller
     }
 
     [HttpPost]
+    [AccessLevel(AccessLevel.ADMINISTRADOR)]
     public IActionResult AgregarProductoDetalle(AltaProductoDetalleViewModel datos) {
         repositorioPresupuestos.InsertarDetalle(datos.IdPresupuesto, datos.IdProducto, datos.Cantidad);
         return RedirectToAction("Listar");
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.ADMINISTRADOR)]
     public IActionResult AltaPresupuesto() {
         var clientes = repositorioClientes.Listar()
                                           .Select(c => new SelectListItem()
@@ -61,6 +66,7 @@ public class PresupuestoController : Controller
     }
 
     [HttpPost]
+    [AccessLevel(AccessLevel.ADMINISTRADOR)]
     public IActionResult AltaPresupuesto(AltaPresupuestoViewModel presupuestoViewModel) {
         var cliente = repositorioClientes.Obtener(presupuestoViewModel.IdCliente);
         if (cliente.Id == -1)
@@ -78,22 +84,26 @@ public class PresupuestoController : Controller
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.ADMINISTRADOR)]
     public IActionResult ModificarPresupuesto(int id) {
         return View(repositorioPresupuestos.Obtener(id));
     }
 
     [HttpPost]
+    [AccessLevel(AccessLevel.ADMINISTRADOR)]
     public IActionResult ModificarPresupuesto(Presupuesto presupuesto) {
         repositorioPresupuestos.Modificar(presupuesto.Id, presupuesto);
         return RedirectToAction("Listar");
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.ADMINISTRADOR)]
     public IActionResult Eliminar(int id) {
         return View(repositorioPresupuestos.Obtener(id));
     }
 
     [HttpGet]
+    [AccessLevel(AccessLevel.ADMINISTRADOR)]
     public IActionResult EliminarPresupuesto(int Id) {
         repositorioPresupuestos.Eliminar(Id);
         return RedirectToAction("Listar");
